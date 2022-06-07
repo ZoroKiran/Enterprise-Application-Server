@@ -1,0 +1,44 @@
+Error Message:
+2020-06-07 20:37:36,639 ERROR [org.jboss.as.controller.management-operation] (ServerService Thread Pool -- 62) WFLYCTL0013: Operation ("add") failed - address: ([("subsystem" => "webservices")]): java.lang.RuntimeException: java.net.UnknownHostException: pr-app2: pr-app2: Name or service not known
+	at org.jboss.as.webservices.dmr.WSSubsystemAdd.createServerConfig(WSSubsystemAdd.java:103)
+	at org.jboss.as.webservices.dmr.WSSubsystemAdd.performBoottime(WSSubsystemAdd.java:91)
+	at org.jboss.as.controller.AbstractBoottimeAddStepHandler.performBoottime(AbstractBoottimeAddStepHandler.java:144)
+	at org.jboss.as.controller.AbstractBoottimeAddStepHandler.performRuntime(AbstractBoottimeAddStepHandler.java:119)
+	at org.jboss.as.controller.AbstractAddStepHandler$1.execute(AbstractAddStepHandler.java:159)
+	at org.jboss.as.controller.AbstractOperationContext.executeStep(AbstractOperationContext.java:999)
+	at org.jboss.as.controller.AbstractOperationContext.processStages(AbstractOperationContext.java:743)
+	at org.jboss.as.controller.AbstractOperationContext.executeOperation(AbstractOperationContext.java:467)
+	at org.jboss.as.controller.ParallelBootOperationStepHandler$ParallelBootTask.run(ParallelBootOperationStepHandler.java:384)
+	at org.jboss.threads.ContextClassLoaderSavingRunnable.run(ContextClassLoaderSavingRunnable.java:35)
+	at org.jboss.threads.EnhancedQueueExecutor.safeRun(EnhancedQueueExecutor.java:1985)
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.doRunTask(EnhancedQueueExecutor.java:1487)
+	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1349)
+	at java.lang.Thread.run(Thread.java:748)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:485)
+Caused by: java.net.UnknownHostException: pr-app2: pr-app2: Name or service not known
+	at java.net.InetAddress.getLocalHost(InetAddress.java:1506)
+	at org.jboss.ws.common.management.AbstractServerConfig.setWebServiceHost(AbstractServerConfig.java:133)
+	at org.jboss.as.webservices.config.ServerConfigImpl.setWebServiceHost(ServerConfigImpl.java:98)
+	at org.jboss.as.webservices.dmr.WSSubsystemAdd.createServerConfig(WSSubsystemAdd.java:101)
+	... 14 more
+Caused by: java.net.UnknownHostException: pr-app2: Name or service not known
+	at java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.net.InetAddress$2.lookupAllHostAddr(InetAddress.java:929)
+	at java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1324)
+	at java.net.InetAddress.getLocalHost(InetAddress.java:1501)
+	... 17 more
+
+
+Root Cause:
+Hostname not setup in the /etc/hosts
+
+Solution:
+Update the /etc/hosts as follows:
+Command: “sudo vi /etc/hosts”
+127.0.0.1  [hostname] localhost 
+
+Successfully start JBoss
+
+
+
+Reference: https://stackoverflow.com/questions/33028842/unknownhostexception-name-or-service-not-known
